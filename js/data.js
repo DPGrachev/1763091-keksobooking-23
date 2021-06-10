@@ -11,12 +11,12 @@ const getRandomArrayElement = (array) => array[getRandomPositiveInt(0, array.len
 
 const getRandomLengthArray = (array) => {
   const arr = new Array(getRandomPositiveInt(1, array.length -1));
-  for (let i=0; i<arr.length; i++){
+  for (let index =0; index <arr.length; index ++){
     let value= getRandomArrayElement(array);
     while(arr.indexOf(value) >= 0){
       value= getRandomArrayElement(array);
     }
-    arr[i] = value;
+    arr[index ] = value;
   }
   return arr;
 };

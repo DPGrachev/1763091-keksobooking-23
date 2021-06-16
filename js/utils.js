@@ -12,4 +12,18 @@ function getRandomPositiveFloat (min, max, nuberOfDecimal=1){
   return result.toFixed(nuberOfDecimal);
 }
 
-export {getRandomPositiveFloat, getRandomPositiveInt};
+const getRandomArrayElement = (array) => array[getRandomPositiveInt(0, array.length - 1)];
+
+const getRandomLengthArray = (array) => {
+  const arr = new Array(getRandomPositiveInt(1, array.length -1));
+  for (let index =0; index <arr.length; index ++){
+    let value= getRandomArrayElement(array);
+    while(arr.indexOf(value) >= 0){
+      value= getRandomArrayElement(array);
+    }
+    arr[index ] = value;
+  }
+  return arr;
+};
+
+export {getRandomPositiveFloat, getRandomPositiveInt, getRandomArrayElement, getRandomLengthArray};

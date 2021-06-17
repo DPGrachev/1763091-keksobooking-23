@@ -1,12 +1,18 @@
-import {getRandomPositiveFloat, getRandomPositiveInt, getRandomArrayElement, getRandomLengthArray} from './utils.js';
+import { getRandomPositiveFloat, getRandomPositiveInt, getRandomArrayElement, getRandomLengthArray } from './utils.js';
 
-
-const AVATARS = ['01','02','03','04','05','06','07','08','09','10'];
+const AVATARS = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10'];
 const TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const TIME = ['12:00', '13:00' , '14:00'];
+const TIME = ['12:00', '13:00', '14:00'];
 const FEAUTURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg' , 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
-const SIMILAR_AD_COUNT = 4;
+const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
+const SIMILAR_AD_COUNT = 1;
+const AD_TYPE_TRANSLATE = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Дворец',
+  hotel: 'Отель',
+};
 
 const createSimilarAd = () => ({
   author: {
@@ -23,7 +29,7 @@ const createSimilarAd = () => ({
     checkout: getRandomArrayElement(TIME),
     features: getRandomLengthArray(FEAUTURES),
     description: 'светлое приятное помещение',
-    photos: getRandomLengthArray(PHOTOS) ,
+    photos: getRandomLengthArray(PHOTOS),
   },
   location: {
     lat: getRandomPositiveFloat(35.65000, 35.7000, 5),
@@ -31,4 +37,4 @@ const createSimilarAd = () => ({
   },
 });
 
-export {createSimilarAd, SIMILAR_AD_COUNT};
+export { createSimilarAd, SIMILAR_AD_COUNT, AD_TYPE_TRANSLATE };

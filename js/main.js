@@ -1,2 +1,3 @@
-import {similarAds} from './data.js';
-similarAds;
+import { showSimilarAds } from './similar_ads.js';
+
+showSimilarAds();

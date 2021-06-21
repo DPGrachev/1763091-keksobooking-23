@@ -1,10 +1,15 @@
-import { createSimilarAd, SIMILAR_AD_COUNT, AD_TYPE_TRANSLATE } from './data.js';
-
-const similarAds = new Array(SIMILAR_AD_COUNT).fill('').map(() => createSimilarAd());
 const similarAdList = document.querySelector('#map-canvas');
 const similarAdTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const enterTemplateValue = (templateBlock, value) => {
+const adTypeTranslate = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Дворец',
+  hotel: 'Отель',
+};
+
+const setTemplateValue = (templateBlock, value) => {
   if (value) {
     templateBlock.textContent = value;
   } else {
@@ -12,43 +17,45 @@ const enterTemplateValue = (templateBlock, value) => {
   }
 };
 
-const enterTemplateImage = (object) => {
+const setAdvertisementImage = (object, adElement) => {
   if (object.offer.photos && object.offer.photos.length > 1) {
     for (let index = 0; index < object.offer.photos.length; index++) {
-      const newPhoto = similarAdTemplate.querySelector('.popup__photo').cloneNode(true);
+      const newPhoto = adElement.querySelector('.popup__photo').cloneNode(true);
       newPhoto.src = object.offer.photos[index];
-      similarAdTemplate.querySelector('.popup__photos').appendChild(newPhoto);
-    }
-    similarAdTemplate.querySelector('.popup__photo').remove();
+      adElement.querySelector('.popup__photos').appendChild(newPhoto);    }
+    adElement.querySelector('.popup__photo').remove();
   } else if (object.offer.photos) {
-    similarAdTemplate.querySelector('.popup__photo').src = object.offer.photos;
+    adElement.querySelector('.popup__photo').src = object.offer.photos;
   } else {
-    similarAdTemplate.querySelector('.popup__photos').classList.add('hidden');
+    adElement.querySelector('.popup__photos').classList.add('hidden');
   }
 };
 
-const showSimilarAds = () => {
-  similarAds.forEach((ad) => {
-    const featuresClass = ad.offer.features.map((feature) => `popup__feature--${feature}`);
+const createAdElement = (similarAd) => {
+  const featuresClass = similarAd.offer.features.map((feature) => `popup__feature--${feature}`);
+  const adElement = similarAdTemplate.cloneNode(true);
 
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__title'), ad.offer.title);
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__text--address'), ad.offer.address);
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__text--price'), ad.offer.price);
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__type'), AD_TYPE_TRANSLATE[ad.offer.type]);
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__text--capacity'), `${ad.offer.rooms  } комнаты для ${  ad.offer.guests } гостей`);
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__text--time'), `Заезд после ${  ad.offer.checkin  }, выезд до ${  ad.offer.checkout}`);
-    similarAdTemplate.querySelectorAll('.popup__feature').forEach((item) => {
-      const feature = item.classList[1];
-      if (!featuresClass.includes(feature)) {
-        item.remove();
-      }
-    });
-    enterTemplateValue(similarAdTemplate.querySelector('.popup__description'), ad.offer.description);
-    enterTemplateImage(ad);
-    similarAdTemplate.querySelector('.popup__avatar').src = ad.author.avatar;
+  setTemplateValue(adElement.querySelector('.popup__title'), similarAd.offer.title);
+  setTemplateValue(adElement.querySelector('.popup__text--address'), similarAd.offer.address);
+  setTemplateValue(adElement.querySelector('.popup__text--price'), similarAd.offer.price);
+  setTemplateValue(adElement.querySelector('.popup__type'), adTypeTranslate[similarAd.offer.type]);
+  setTemplateValue(adElement.querySelector('.popup__text--capacity'), `${similarAd.offer.rooms  } комнаты для ${  similarAd.offer.guests } гостей`);
+  setTemplateValue(adElement.querySelector('.popup__text--time'), `Заезд после ${  similarAd.offer.checkin  }, выезд до ${  similarAd.offer.checkout}`);
+  adElement.querySelectorAll('.popup__feature').forEach((item) => {
+    const feature = item.classList[1];
+    if (!featuresClass.includes(feature)) {
+      item.remove();
+    }
+  });
+  setTemplateValue(adElement.querySelector('.popup__description'), similarAd.offer.description);
+  setAdvertisementImage(similarAd, adElement);
+  adElement.querySelector('.popup__avatar').src = similarAd.author.avatar;
+  return adElement;
+};
 
-    const similarAd = similarAdTemplate.cloneNode(true);
-    similarAdList.appendChild(similarAd);
+const renderSimilarAds = (similarAds) => {
+  similarAds.forEach((advertise) => {
+    similarAdList.appendChild(createAdElement(advertise));
   });
 };
-export { showSimilarAds };
+export { renderSimilarAds };

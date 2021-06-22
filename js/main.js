@@ -1,6 +1,7 @@
 import { renderSimilarAds } from './similar_ads.js';
 import { createSimilarAd } from './data.js';
-import { disableForm, activateForm } from './form.js';
+import { disableForm, enableForm } from './form.js';
+import './validity.js';
 
 const SIMILAR_AD_COUNT = 1;
 const similarAds = new Array(SIMILAR_AD_COUNT).fill('').map(() => createSimilarAd());
@@ -8,4 +9,4 @@ const similarAds = new Array(SIMILAR_AD_COUNT).fill('').map(() => createSimilarA
 
 renderSimilarAds(similarAds);
 disableForm();
-activateForm();
+enableForm();

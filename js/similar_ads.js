@@ -42,8 +42,7 @@ const createAdElement = (similarAd) => {
   setTemplateValue(adElement.querySelector('.popup__text--capacity'), `${similarAd.offer.rooms  } комнаты для ${  similarAd.offer.guests } гостей`);
   setTemplateValue(adElement.querySelector('.popup__text--time'), `Заезд после ${  similarAd.offer.checkin  }, выезд до ${  similarAd.offer.checkout}`);
   adElement.querySelectorAll('.popup__feature').forEach((item) => {
-    const feature = item.classList[1];
-    if (!featuresClass.includes(feature)) {
+    if (!featuresClass.includes(item.classList[1])) {
       item.remove();
     }
   });

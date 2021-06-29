@@ -45,10 +45,31 @@ roomNumberField.addEventListener('change', (evt) => {
       option.disabled='disabled';
       if(optionValue === 100){
         option.removeAttribute('disabled');
-        option.selected='selected';           }
+        option.selected='selected';
+      }
     }else{
       option.removeAttribute('disabled');
       option.selected='selected';
     }
   }
+});
+
+const timeInField = document.querySelector('#timein');
+const timeOutField = document.querySelector('#timeout');
+const syncingTimeField = function (event, timeField) {
+  for (const time of timeField.children){
+    if(time.value === event.target.value){
+      time.selected='selected';
+    }else{
+      time.removeAttribute('disabled');
+    }
+  }
+};
+
+timeInField.addEventListener('change', (evt) => {
+  syncingTimeField(evt, timeOutField);
+});
+
+timeOutField.addEventListener('change', (evt) => {
+  syncingTimeField(evt, timeInField);
 });

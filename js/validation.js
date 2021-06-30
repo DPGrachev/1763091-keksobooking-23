@@ -56,20 +56,11 @@ roomNumberField.addEventListener('change', (evt) => {
 
 const timeInField = document.querySelector('#timein');
 const timeOutField = document.querySelector('#timeout');
-const syncingTimeField = function (event, timeField) {
-  for (const time of timeField.children){
-    if(time.value === event.target.value){
-      time.selected='selected';
-    }else{
-      time.removeAttribute('disabled');
-    }
-  }
-};
 
 timeInField.addEventListener('change', (evt) => {
-  syncingTimeField(evt, timeOutField);
+  timeOutField.value = evt.target.value;
 });
 
 timeOutField.addEventListener('change', (evt) => {
-  syncingTimeField(evt, timeInField);
+  timeInField.value = evt.target.value;
 });

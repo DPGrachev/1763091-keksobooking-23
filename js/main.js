@@ -1,12 +1,12 @@
-import { renderSimilarAds } from './similar_ads.js';
+import {createSimilarAdMarker} from './map.js';
 import { createSimilarAd } from './data.js';
-import { disableForm, enableForm } from './form.js';
 import './validation.js';
 
-const SIMILAR_AD_COUNT = 1;
+
+const SIMILAR_AD_COUNT = 10;
 const similarAds = new Array(SIMILAR_AD_COUNT).fill('').map(() => createSimilarAd());
 
 
-renderSimilarAds(similarAds);
-disableForm();
-enableForm();
+similarAds.forEach((advertise) => {
+  createSimilarAdMarker(advertise);
+});

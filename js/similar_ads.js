@@ -1,4 +1,3 @@
-const similarAdList = document.querySelector('#map-canvas');
 const similarAdTemplate = document.querySelector('#card').content.querySelector('.popup');
 
 const adTypeTranslate = {
@@ -52,9 +51,4 @@ const createAdElement = (similarAd) => {
   return adElement;
 };
 
-const renderSimilarAds = (similarAds) => {
-  similarAds.forEach((advertise) => {
-    similarAdList.appendChild(createAdElement(advertise));
-  });
-};
-export { renderSimilarAds };
+export { createAdElement };

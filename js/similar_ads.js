@@ -31,7 +31,6 @@ const setAdvertisementImage = (object, adElement) => {
 };
 
 const createAdElement = (similarAd) => {
-  const featuresClass = similarAd.offer.features.map((feature) => `popup__feature--${feature}`);
   const adElement = similarAdTemplate.cloneNode(true);
 
   setTemplateValue(adElement.querySelector('.popup__title'), similarAd.offer.title);
@@ -40,11 +39,18 @@ const createAdElement = (similarAd) => {
   setTemplateValue(adElement.querySelector('.popup__type'), adTypeTranslate[similarAd.offer.type]);
   setTemplateValue(adElement.querySelector('.popup__text--capacity'), `${similarAd.offer.rooms  } комнаты для ${  similarAd.offer.guests } гостей`);
   setTemplateValue(adElement.querySelector('.popup__text--time'), `Заезд после ${  similarAd.offer.checkin  }, выезд до ${  similarAd.offer.checkout}`);
-  adElement.querySelectorAll('.popup__feature').forEach((item) => {
-    if (!featuresClass.includes(item.classList[1])) {
+  if(similarAd.offer.features){
+    const featuresClass = similarAd.offer.features.map((feature) => `popup__feature--${feature}`);
+    adElement.querySelectorAll('.popup__feature').forEach((item) => {
+      if (!featuresClass.includes(item.classList[1])) {
+        item.remove();
+      }
+    });
+  }else{
+    adElement.querySelectorAll('.popup__feature').forEach((item) => {
       item.remove();
-    }
-  });
+    });
+  }
   setTemplateValue(adElement.querySelector('.popup__description'), similarAd.offer.description);
   setAdvertisementImage(similarAd, adElement);
   adElement.querySelector('.popup__avatar').src = similarAd.author.avatar;

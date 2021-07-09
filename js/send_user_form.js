@@ -3,6 +3,9 @@ import {isEscEvent} from './utils.js';
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
+let closeMessageSuccessSendForm = null;
+let closeMessageErrorSendForm = null;
+
 const onMessageErrorSendClick = () => {
   closeMessageErrorSendForm();
 };
@@ -14,7 +17,7 @@ const onMessageErrorSendEskKeydown = (evt) => {
   }
 };
 
-const closeMessageErrorSendForm = () => {
+closeMessageErrorSendForm = () => {
   errorMessage.remove();
   document.removeEventListener('click', onMessageErrorSendClick);
   document.removeEventListener('keydown', onMessageErrorSendEskKeydown);
@@ -43,7 +46,7 @@ const openMessageSuccessSendForm = () => {
   document.addEventListener('keydown', onMessageSuccessSendEskKeydown);
 };
 
-const closeMessageSuccessSendForm = () => {
+closeMessageSuccessSendForm = () => {
   successMessage.remove();
   document.removeEventListener('click', onMessageSuccessSendClick);
   document.removeEventListener('keydown', onMessageSuccessSendEskKeydown);

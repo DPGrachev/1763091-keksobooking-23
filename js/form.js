@@ -1,3 +1,5 @@
+import { sendData } from './server.js';
+
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const featureCheckbox = mapFilters.children;
@@ -21,4 +23,15 @@ const enableForm = () => {
   }
 };
 
-export {disableForm, enableForm};
+const setAdFormSubmit = (onSuccess,onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    sendData(
+      () => onSuccess(),
+      () => onFail(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+export {disableForm, enableForm, setAdFormSubmit};

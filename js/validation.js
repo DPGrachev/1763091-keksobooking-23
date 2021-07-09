@@ -12,8 +12,6 @@ const priceField = document.querySelector('#price');
 typeField.addEventListener('change', (evt) => {
   priceField.placeholder = priceForType[evt.target.value];
   priceField.min = priceForType[evt.target.value];
-  priceField.setCustomValidity(`Значение должно быть больше или равно ${ priceField.min}`);
-  priceField.reportValidity();
 });
 
 const titleField = document.querySelector('#title');

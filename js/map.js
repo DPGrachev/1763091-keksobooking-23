@@ -1,23 +1,27 @@
 import { createAdElement } from './similar_ads.js';
-import { disableForm, enableForm } from './form.js';
 
-disableForm();
+
+const TOKYO_COORDINATES = {
+  lat: 35.6895,
+  lng: 139.692,
+};
+const MAP_ZOOM = 11;
 
 const map = L.map('map-canvas')
-  .on('load', () => {
-    enableForm();
-  })
   .setView({
-    lat: 35.6895,
-    lng: 139.692,
-  }, 11);
-
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
+  }, MAP_ZOOM);
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+const mapInit = (onLoad) => {
+  map.on('load', onLoad());
+};
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
@@ -27,8 +31,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.692,
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
   },
   {
     draggable: true,
@@ -44,7 +48,6 @@ addressField.value = `${mainPinMarker.getLatLng().lat.toFixed(5) }, ${  mainPinM
 mainPinMarker.on('moveend', (evt) => {
   addressField.value = `${evt.target.getLatLng().lat.toFixed(5) }, ${  evt.target.getLatLng().lng.toFixed(5)}`;
 });
-
 const createSimilarAdMarker = (advertise) => {
   const similarAdPinIcon = L.icon({
     iconUrl: 'img/pin.svg',
@@ -68,4 +71,21 @@ const createSimilarAdMarker = (advertise) => {
     );
 };
 
-export {createSimilarAdMarker};
+const adForm = document.querySelector('.ad-form');
+const resetButtom = document.querySelector('.ad-form__reset');
+const resetForm = () => {
+  adForm.reset();
+  map.setView({
+    lat: TOKYO_COORDINATES.lat,
+    lng: TOKYO_COORDINATES.lng,
+  }, MAP_ZOOM);
+  mainPinMarker.setLatLng(TOKYO_COORDINATES);
+  addressField.value = `${mainPinMarker.getLatLng().lat.toFixed(5) }, ${  mainPinMarker.getLatLng().lng.toFixed(5)}`;
+};
+
+resetButtom.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
+
+export {mapInit, createSimilarAdMarker, resetForm};

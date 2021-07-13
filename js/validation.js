@@ -1,20 +1,23 @@
-const priceForType = {
+const pricesForType = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
   house: 5000,
   palace: 10000,
 };
-
 const typeField = document.querySelector('#type');
 const priceField = document.querySelector('#price');
+const titleField = document.querySelector('#title');
+const roomNumberField = document.querySelector('#room_number');
+const capacityField = document.querySelector('#capacity').children;
+const timeInField = document.querySelector('#timein');
+const timeOutField = document.querySelector('#timeout');
 
 typeField.addEventListener('change', (evt) => {
-  priceField.placeholder = priceForType[evt.target.value];
-  priceField.min = priceForType[evt.target.value];
+  priceField.placeholder = pricesForType[evt.target.value];
+  priceField.min = pricesForType[evt.target.value];
 });
 
-const titleField = document.querySelector('#title');
 titleField.addEventListener('input', () => {
   if (titleField.validity.tooShort) {
     titleField.setCustomValidity('Заголовок должно состоять минимум из 30 символов');
@@ -27,9 +30,6 @@ titleField.addEventListener('input', () => {
   }
   titleField.reportValidity();
 });
-
-const roomNumberField = document.querySelector('#room_number');
-const capacityField = document.querySelector('#capacity').children;
 
 roomNumberField.addEventListener('change', (evt) => {
   const eventValue = Number(evt.target.value);
@@ -51,9 +51,6 @@ roomNumberField.addEventListener('change', (evt) => {
     }
   }
 });
-
-const timeInField = document.querySelector('#timein');
-const timeOutField = document.querySelector('#timeout');
 
 timeInField.addEventListener('change', (evt) => {
   timeOutField.value = evt.target.value;

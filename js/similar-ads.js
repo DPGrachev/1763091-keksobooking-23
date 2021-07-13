@@ -1,10 +1,10 @@
 const similarAdTemplate = document.querySelector('#card').content.querySelector('.popup');
 
-const adTypeTranslate = {
+const adTypeTranslations = {
   palace: 'Дворец',
   flat: 'Квартира',
   house: 'Дом',
-  bungalow: 'Дворец',
+  bungalow: 'Бунгало',
   hotel: 'Отель',
 };
 
@@ -36,7 +36,7 @@ const createAdElement = (similarAd) => {
   setTemplateValue(adElement.querySelector('.popup__title'), similarAd.offer.title);
   setTemplateValue(adElement.querySelector('.popup__text--address'), similarAd.offer.address);
   setTemplateValue(adElement.querySelector('.popup__text--price'), similarAd.offer.price);
-  setTemplateValue(adElement.querySelector('.popup__type'), adTypeTranslate[similarAd.offer.type]);
+  setTemplateValue(adElement.querySelector('.popup__type'), adTypeTranslations[similarAd.offer.type]);
   setTemplateValue(adElement.querySelector('.popup__text--capacity'), `${similarAd.offer.rooms  } комнаты для ${  similarAd.offer.guests } гостей`);
   setTemplateValue(adElement.querySelector('.popup__text--time'), `Заезд после ${  similarAd.offer.checkin  }, выезд до ${  similarAd.offer.checkout}`);
   if(similarAd.offer.features){

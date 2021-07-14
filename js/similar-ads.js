@@ -16,7 +16,7 @@ const setTemplateValue = (templateBlock, value) => {
   }
 };
 
-const setAdvertisementImage = (object, adElement) => {
+const setAdImage = (object, adElement) => {
   if (object.offer.photos && object.offer.photos.length > 1) {
     for (let index = 0; index < object.offer.photos.length; index++) {
       const newPhoto = adElement.querySelector('.popup__photo').cloneNode(true);
@@ -52,7 +52,7 @@ const createAdElement = (similarAd) => {
     });
   }
   setTemplateValue(adElement.querySelector('.popup__description'), similarAd.offer.description);
-  setAdvertisementImage(similarAd, adElement);
+  setAdImage(similarAd, adElement);
   adElement.querySelector('.popup__avatar').src = similarAd.author.avatar;
   return adElement;
 };

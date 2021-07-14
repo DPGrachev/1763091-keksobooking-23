@@ -51,4 +51,8 @@ const setAdsFilter = (cb) => {
   });
 };
 
-export {setAdsFilter, compareAds};
+const reserMapFilter = () => {
+  mapFilters.reset();
+};
+
+export {setAdsFilter, compareAds,reserMapFilter};

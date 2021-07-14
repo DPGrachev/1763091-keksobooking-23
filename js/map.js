@@ -5,9 +5,17 @@ const TOKYO_COORDINATES = {
   lat: 35.6895,
   lng: 139.692,
 };
+const mainPinSetting = {
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52,52],
+  iconAnchor: [26,52],
+};
+const similarAdPinSetting = {
+  iconUrl: 'img/pin.svg',
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+};
 const MAP_ZOOM = 11;
-const adForm = document.querySelector('.ad-form');
-const resetButtom = document.querySelector('.ad-form__reset');
 
 const map = L.map('map-canvas')
   .setView({
@@ -26,9 +34,9 @@ const mapInit = (onLoad) => {
 };
 
 const mainPinIcon = L.icon({
-  iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: mainPinSetting.iconUrl,
+  iconSize: mainPinSetting.iconSize,
+  iconAnchor: mainPinSetting.iconAnchor,
 });
 
 const mainPinMarker = L.marker(
@@ -53,9 +61,9 @@ mainPinMarker.on('moveend', (evt) => {
 });
 const createSimilarAdMarker = (advertise) => {
   const similarAdPinIcon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: similarAdPinSetting.iconUrl,
+    iconSize: similarAdPinSetting.iconSize,
+    iconAnchor: similarAdPinSetting.iconAnchor,
   });
   const similarAdMarker = L.marker(
     {
@@ -85,19 +93,15 @@ const renderSimilarAds = (ads, adCount) => {
     });
 };
 
-const resetForm = () => {
-  adForm.reset();
-  map.setView({
-    lat: TOKYO_COORDINATES.lat,
-    lng: TOKYO_COORDINATES.lng,
-  }, MAP_ZOOM);
+const resetMap = () => {
+  map
+    .setView({
+      lat: TOKYO_COORDINATES.lat,
+      lng: TOKYO_COORDINATES.lng,
+    }, MAP_ZOOM)
+    .closePopup();
   mainPinMarker.setLatLng(TOKYO_COORDINATES);
   addressField.value = `${mainPinMarker.getLatLng().lat.toFixed(5) }, ${  mainPinMarker.getLatLng().lng.toFixed(5)}`;
 };
 
-resetButtom.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  resetForm();
-});
-
-export {mapInit, createSimilarAdMarker, resetForm,similarAdsMarkerGroup, renderSimilarAds};
+export {mapInit, renderSimilarAds, resetMap};

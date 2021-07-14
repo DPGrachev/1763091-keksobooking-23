@@ -4,6 +4,10 @@ const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 const featureCheckbox = mapFilters.children;
 const fieldset = adForm.querySelectorAll('fieldset');
+const resetButtom = document.querySelector('.ad-form__reset');
+const priceField = document.querySelector('#price');
+const DEFAULT_PRICE_PLACEHOLDER = priceField.placeholder;
+const DEFAULT_PRICE_MIN = priceField.min;
 
 const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
@@ -34,4 +38,20 @@ const setAdFormSubmit = (onSuccess,onFail) => {
   });
 };
 
-export {disableForm, enableForm, setAdFormSubmit};
+const resetForm = (mapReset) => {
+  adForm.reset();
+  priceField.placeholder = DEFAULT_PRICE_PLACEHOLDER;
+  priceField.min = DEFAULT_PRICE_MIN;
+  mapReset();
+};
+
+const setResetButtom = (mapReset, mapFiltersReset, imageReset) => {
+  resetButtom.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    resetForm(mapReset);
+    mapFiltersReset();
+    imageReset();
+  });
+};
+
+export {disableForm, enableForm, setAdFormSubmit, resetForm, setResetButtom};

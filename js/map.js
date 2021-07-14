@@ -1,11 +1,13 @@
-import { createAdElement } from './similar_ads.js';
-
+import { createAdElement } from './similar-ads.js';
+import {compareAds} from './map-filter.js';
 
 const TOKYO_COORDINATES = {
   lat: 35.6895,
   lng: 139.692,
 };
 const MAP_ZOOM = 11;
+const adForm = document.querySelector('.ad-form');
+const resetButtom = document.querySelector('.ad-form__reset');
 
 const map = L.map('map-canvas')
   .setView({
@@ -39,10 +41,11 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
-mainPinMarker.addTo(map);
 
 const similarAdsMarkerGroup = L.layerGroup().addTo(map);
 const addressField = document.querySelector('#address');
+
+mainPinMarker.addTo(map);
 addressField.value = `${mainPinMarker.getLatLng().lat.toFixed(5) }, ${  mainPinMarker.getLatLng().lng.toFixed(5)}`;
 
 mainPinMarker.on('moveend', (evt) => {
@@ -71,8 +74,17 @@ const createSimilarAdMarker = (advertise) => {
     );
 };
 
-const adForm = document.querySelector('.ad-form');
-const resetButtom = document.querySelector('.ad-form__reset');
+const renderSimilarAds = (ads, adCount) => {
+  similarAdsMarkerGroup.clearLayers();
+  ads
+    .slice()
+    .sort(compareAds)
+    .slice(0, adCount)
+    .forEach((advertise) => {
+      createSimilarAdMarker(advertise);
+    });
+};
+
 const resetForm = () => {
   adForm.reset();
   map.setView({
@@ -88,4 +100,4 @@ resetButtom.addEventListener('click', (evt) => {
   resetForm();
 });
 
-export {mapInit, createSimilarAdMarker, resetForm};
+export {mapInit, createSimilarAdMarker, resetForm,similarAdsMarkerGroup, renderSimilarAds};

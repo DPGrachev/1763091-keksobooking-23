@@ -27,4 +27,20 @@ const showAlert = (message) => {
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export {showAlert, isEscEvent};
+const getChekedInputValues = (selector) => {
+  const chekedValues = [];
+  const filterFeatures = document.querySelectorAll(selector);
+  filterFeatures.forEach((features) => chekedValues.push(features.value));
+  return chekedValues;
+};
+
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {showAlert, isEscEvent, getChekedInputValues, debounce};
